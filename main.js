@@ -30,7 +30,7 @@ function randInt(min, max) {
 
 function randomHexColorBasedOnHue(hue, delta = 20) {
     let h = hue + randInt(-delta, delta);
-    let s = randInt(70, 130);
+    let s = randInt(80, 100);
     let l = randInt(50, 70);
 
     return `hsl(${h}, ${s}%, ${l}%)`;
@@ -83,7 +83,7 @@ const drawer = (ctx) => ((event) => {
         ctx.fill();
     }
 
-    ctx.fillStyle = randomHexColorBasedOnHue(30, 1);
+    ctx.fillStyle = randomHexColorBasedOnHue(37, 7);
     ctx.beginPath();
     ctx.arc(
         event.clientX,
