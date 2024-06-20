@@ -18,10 +18,10 @@ document.addEventListener('DOMContentLoaded', function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
 
-    // On middle click, draw pepper noise
-    canvas.addEventListener('auxclick', pepperDrawer(ctx));
+    // On double click, draw pepper noise
+    canvas.addEventListener('dblclick', pepperDrawer(ctx));
 
-    document.addEventListener("resize", () => {
+    window.addEventListener("resize", () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     });
