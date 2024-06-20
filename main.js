@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // On click, draw an egg
     canvas.addEventListener('click', drawer(ctx));
+
     // On right click, clear the canvas
     canvas.addEventListener('contextmenu', (event) => {
         event.preventDefault();
