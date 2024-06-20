@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
 
+    // On middle click, draw pepper noise
+    canvas.addEventListener('auxclick', pepperDrawer(ctx));
+
     document.addEventListener("resize", () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -98,3 +101,40 @@ const drawer = (ctx) => ((event) => {
     // ctx.stroke();
 
 });
+
+function generateRandomPoint(x, y, minDistance, maxDistance) {
+    // Generate a random angle between 0 and 2π radians
+    const angle = Math.random() * 2 * Math.PI;
+
+    // Generate a random distance between minDistance and maxDistance
+    const distance = minDistance + Math.random() * (maxDistance - minDistance);
+
+    // Calculate the new point's coordinates
+    const newX = x + distance * Math.cos(angle);
+    const newY = y + distance * Math.sin(angle);
+
+    return { x: newX, y: newY };
+}
+
+const pepperDrawer = (context) => (event) => drawPepper(context, event.clientX, event.clientY, 75 * SIZE_FACTOR);
+
+function drawPepper(ctx, x, y, size) {
+    // Draws random pepper noise in a circle of radius size at (x, y)
+    const numPeppers = randInt(10, 75);
+    const pepperSize = Math.random() * 0.5 + 1.25;
+    const pepperColor = 'black';
+    const saltColor = 'white';
+
+    for (let i = 0; i < numPeppers; i++) {
+        ctx.fillStyle = Math.random() > 0.75 ? pepperColor : saltColor;
+
+        let {x: newX, y: newY} = generateRandomPoint(x, y, 0, size * (0.5 + Math.random()));
+
+        ctx.fillRect(
+            newX,
+            newY,
+            pepperSize,
+            pepperSize
+        );
+    }
+}
