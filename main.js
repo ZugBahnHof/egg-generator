@@ -58,7 +58,7 @@ const drawer = (ctx) => ((event) => {
         }),
     );
 
-    ctx.fillStyle = '#FEA47F';
+    ctx.fillStyle = '#b5651d';
     const add = randInt(0.1 * SIZE_FACTOR, 2 * SIZE_FACTOR);
     for ({x, y, radius} of data) {
         ctx.beginPath();
@@ -73,8 +73,8 @@ const drawer = (ctx) => ((event) => {
         ctx.fill();
     }
 
-    ctx.fillStyle = 'white';
     for ({x, y, radius} of data) {
+        ctx.fillStyle = Math.random() < 0.85 ? '#ffffef' : "#ffffea";
         ctx.beginPath();
 
         ctx.arc(
