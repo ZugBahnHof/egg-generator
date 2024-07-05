@@ -10,16 +10,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // On click, draw an egg
-    canvas.addEventListener('click', drawer(ctx));
+    canvas.addEventListener('click',
+        event => {
+            if (event.detail === 1) {
+                // it was a single click
+                drawer(ctx)(event);
+            } else if (event.detail === 2) {
+                // it was a double click
+                pepperDrawer(ctx)(event);
+            }
+        },
+    );
 
     // On right click, clear the canvas
     canvas.addEventListener('contextmenu', (event) => {
         event.preventDefault();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
-
-    // On double click, draw pepper noise
-    canvas.addEventListener('dblclick', pepperDrawer(ctx));
 
     window.addEventListener("resize", () => {
         canvas.width = window.innerWidth;
@@ -120,13 +127,13 @@ const pepperDrawer = (context) => (event) => drawPepper(context, event.clientX, 
 
 function drawPepper(ctx, x, y, size) {
     // Draws random pepper noise in a circle of radius size at (x, y)
-    const numPeppers = randInt(10, 75);
+    const numPeppers = randInt(10, 70);
     const pepperSize = Math.random() * 0.5 + 1.25;
     const pepperColor = 'black';
     const saltColor = 'white';
 
     for (let i = 0; i < numPeppers; i++) {
-        ctx.fillStyle = Math.random() > 0.75 ? pepperColor : saltColor;
+        ctx.fillStyle = Math.random() > 0.8 ? pepperColor : saltColor;
 
         let {x: newX, y: newY} = generateRandomPoint(x, y, 0, size * (0.5 + Math.random()));
 
