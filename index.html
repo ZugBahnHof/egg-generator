@@ -10,6 +10,8 @@
             padding: 0;
             overflow: hidden;
             user-select: none;
+            font-family: Inter, Montserrat, Roboto, "Product Sans", sans-serif;
+            color: #333;
         }
 
         #canvas {
@@ -25,8 +27,60 @@
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            font-family: Inter, Montserrat, Roboto, "Product Sans", sans-serif;
-            color: #333;
+        }
+
+        .shadow-button {
+            margin: 1rem 0.5rem;
+            padding: 1rem;
+            background: #F8EFBA;
+            border-radius: 1rem;
+            border: solid 1px #F97F51;
+            box-shadow: 3px 1px 0 4px rgba(249,127,81,0.75);
+            -webkit-box-shadow: 3px 1px 0 4px rgba(249,127,81,0.75);
+            -moz-box-shadow: 3px 1px 0 4px rgba(249,127,81,0.75);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .shadow-button:hover {
+            cursor: pointer;
+            filter: brightness(1.05);
+        }
+
+        .shadow-button:active {
+            filter: brightness(0.95);
+            transform: scale(0.95) translate(0.25rem, 0.25rem);
+        }
+
+        .shadow-button img {
+            width: 3rem;
+            aspect-ratio: 1;
+            object-fit: contain;
+        }
+
+        #drawer-trigger {
+            position: absolute;
+            bottom: 0;
+            right: 0.5rem;
+        }
+
+        #drawer-trigger div {
+            width: min-content;
+            font-size: 2em;
+            vertical-align: middle;
+        }
+
+        nav {
+            position: absolute;
+            bottom: 0;
+            right: 7.5rem;
+            display: flex;
+            flex-direction: row-reverse;
+            overflow-x: hidden;
+            overflow-y: visible;
+            width: 0;
+            transition: width 0.5s ease;
         }
     </style>
 </head>
@@ -37,5 +91,20 @@
     <p>Right click to reset</p>
 </main>
 <canvas id="canvas" style="width: 100vw; height: 100vh;"></canvas>
+<nav id="egg-selector">
+    <button class="shadow-button">
+        <img src="" alt="">
+    </button>
+    <button class="shadow-button">
+        <img src="" alt="">
+    </button>
+    <button class="shadow-button">
+        <img src="" alt="">
+    </button>
+</nav>
+<button class="shadow-button" id="drawer-trigger">
+    <div>&lsaquo;</div>
+    <img id="selected-img" src="" alt="">
+</button>
 </body>
 </html>

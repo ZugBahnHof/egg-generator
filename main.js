@@ -1,5 +1,7 @@
 const SIZE_FACTOR = 0.5;
 
+let drawerOpen = false;
+
 document.addEventListener('DOMContentLoaded', function () {
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
@@ -33,6 +35,26 @@ document.addEventListener('DOMContentLoaded', function () {
         canvas.height = window.innerHeight;
     });
 
+    const toggleDrawer = document.getElementById('drawer-trigger');
+    const drawerTextChild = toggleDrawer.firstElementChild;
+    console.log(drawerTextChild);
+    console.log(drawerTextChild.innerText);
+    const eggSelector = document.getElementById('egg-selector');
+
+
+    toggleDrawer.addEventListener('click', () => {
+        drawerOpen = !drawerOpen;
+
+        if (drawerOpen) {
+            eggSelector.style.width = "600px";
+            eggSelector.style.overflowX = "unset";
+            drawerTextChild.innerHTML = '&rsaquo;';
+        } else {
+            eggSelector.style.width = "0";
+            eggSelector.style.overflowX = "hidden";
+            drawerTextChild.innerHTML = '&lsaquo;';
+        }
+    });
 });
 
 function randInt(min, max) {
