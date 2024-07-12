@@ -71,7 +71,7 @@
             vertical-align: middle;
         }
 
-        nav {
+        #egg-selector {
             position: absolute;
             bottom: 0;
             right: 7.5rem;
@@ -91,17 +91,17 @@
     <p>Right click to reset</p>
 </main>
 <canvas id="canvas" style="width: 100vw; height: 100vh;"></canvas>
-<nav id="egg-selector">
-    <button class="shadow-button">
+<form id="egg-selector">
+    <button class="shadow-button" name="selection" value="RANDOM">
         <img src="media/random.png" alt="">
     </button>
-    <button class="shadow-button">
+    <button class="shadow-button" name="selection" value="NORMAL">
         <img src="media/normal.png" alt="">
     </button>
-    <button class="shadow-button">
-        <img src="media/chilli2.png" alt="">
+    <button class="shadow-button" name="selection" value="CHILLI">
+        <img src="media/chilli.png" alt="">
     </button>
-</nav>
+</form>
 <button class="shadow-button" id="drawer-trigger">
     <div>&lsaquo;</div>
     <img id="selected-img" src="media/normal.png" alt="">

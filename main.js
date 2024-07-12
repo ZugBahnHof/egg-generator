@@ -1,6 +1,13 @@
 const SIZE_FACTOR = 0.5;
 
 let drawerOpen = false;
+let __eggMode = 0;
+
+const EGG_MODES = {
+    NORMAL: 0,
+    RANDOM: 1,
+    CHILLI: 2,
+};
 
 document.addEventListener('DOMContentLoaded', function () {
     let canvas = document.getElementById('canvas');
@@ -54,6 +61,12 @@ document.addEventListener('DOMContentLoaded', function () {
             eggSelector.style.overflowX = "hidden";
             drawerTextChild.innerHTML = '&lsaquo;';
         }
+    });
+
+    eggSelector.addEventListener("submit", event => {
+        event.preventDefault();
+
+        setEggMode(event.submitter.value);
     });
 });
 
@@ -166,4 +179,10 @@ function drawPepper(ctx, x, y, size) {
             pepperSize
         );
     }
+}
+
+function setEggMode(mode = "NORMAL") {
+    __eggMode = EGG_MODES[mode];
+
+    document.querySelector("#selected-img").src = `media/${mode.toLowerCase()}.png`
 }
