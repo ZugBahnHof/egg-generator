@@ -72,8 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const toggleDrawer = document.getElementById('drawer-trigger');
     const drawerTextChild = toggleDrawer.firstElementChild;
-    console.log(drawerTextChild);
-    console.log(drawerTextChild.innerText);
+
     const eggSelector = document.getElementById('egg-selector');
 
 
