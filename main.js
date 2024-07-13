@@ -9,6 +9,34 @@ const EGG_MODES = {
     CHILLI: 2,
 };
 
+function getPepperColor(mode) {
+    switch (mode) {
+        case EGG_MODES.NORMAL:
+            return 'black';
+        case EGG_MODES.CHILLI:
+            return 'red';
+    }
+}
+
+function getSaltColor(mode) {
+    switch (mode) {
+        case EGG_MODES.NORMAL:
+            return 'white';
+        case EGG_MODES.CHILLI:
+            return 'black';
+    }
+}
+
+function getPepperSaltVariation(mode) {
+    switch (mode) {
+        case EGG_MODES.NORMAL:
+            return 0.8;
+        case EGG_MODES.CHILLI:
+            return 0.5;
+    }
+}
+
+
 document.addEventListener('DOMContentLoaded', function () {
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
@@ -162,13 +190,16 @@ const pepperDrawer = (context) => (event) => drawPepper(context, event.clientX, 
 
 function drawPepper(ctx, x, y, size) {
     // Draws random pepper noise in a circle of radius size at (x, y)
+
+    const mode = getEggMode();
+
     const numPeppers = randInt(10, 70);
     const pepperSize = Math.random() * 0.5 + 1.25;
-    const pepperColor = 'black';
-    const saltColor = 'white';
+    const pepperColor = getPepperColor(mode);
+    const saltColor = getSaltColor(mode);
 
     for (let i = 0; i < numPeppers; i++) {
-        ctx.fillStyle = Math.random() > 0.8 ? pepperColor : saltColor;
+        ctx.fillStyle = Math.random() > getPepperSaltVariation(mode) ? pepperColor : saltColor;
 
         let {x: newX, y: newY} = generateRandomPoint(x, y, 0, size * (0.5 + Math.random()));
 
@@ -185,4 +216,17 @@ function setEggMode(mode = "NORMAL") {
     __eggMode = EGG_MODES[mode];
 
     document.querySelector("#selected-img").src = `media/${mode.toLowerCase()}.png`
+}
+
+function getEggMode() {
+    if (!__eggMode) {
+        setEggMode();
+    }
+
+    if (__eggMode === EGG_MODES.RANDOM) {
+        // One-off random mode
+        return Math.random() > 0.5 ? EGG_MODES.NORMAL : EGG_MODES.CHILLI;
+    }
+
+    return __eggMode;
 }
