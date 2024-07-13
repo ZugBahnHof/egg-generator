@@ -23,7 +23,7 @@ function getSaltColor(mode) {
         case EGG_MODES.NORMAL:
             return 'white';
         case EGG_MODES.CHILLI:
-            return 'black';
+            return '#eb8e1b';
     }
 }
 
@@ -33,6 +33,60 @@ function getPepperSaltVariation(mode) {
             return 0.8;
         case EGG_MODES.CHILLI:
             return 0.5;
+    }
+}
+
+function getPepperSize(mode) {
+    switch (mode) {
+        case EGG_MODES.NORMAL:
+            return Math.random() * 0.5 + 1.25
+        case EGG_MODES.CHILLI:
+            return Math.random() * 0.5 + 2;
+    }
+}
+
+function getPepperCount(mode) {
+    switch (mode) {
+        case EGG_MODES.NORMAL:
+            return randInt(10, 70);
+        case EGG_MODES.CHILLI:
+            return randInt(40, 100);
+    }
+}
+
+function getPepperSaltPoint(x, y, size, mode) {
+    const minDistance = (() => {
+        switch (mode) {
+            case EGG_MODES.NORMAL:
+                return 0;
+            case EGG_MODES.CHILLI:
+                return 40 * SIZE_FACTOR + randInt(-4, 4);
+        }
+    })();
+
+    const maxDistance = (() => {
+        switch (mode) {
+            case EGG_MODES.NORMAL:
+                return size * (0.5 + Math.random());
+            case EGG_MODES.CHILLI:
+                return size * (0.5 + Math.random());
+        }
+    })();
+
+    return generateRandomPoint(
+        x,
+        y,
+        minDistance,
+        maxDistance,
+    );
+}
+
+function getEggBorderColor(mode) {
+    switch (mode) {
+        case EGG_MODES.NORMAL:
+            return '#b5651d';
+        case EGG_MODES.CHILLI:
+            return '#da1f3d';
     }
 }
 
@@ -127,7 +181,9 @@ const drawer = (ctx) => ((event) => {
         }),
     );
 
-    ctx.fillStyle = '#b5651d';
+    const mode = getEggMode();
+
+    ctx.fillStyle = getEggBorderColor(mode);
     const add = randInt(0.1 * SIZE_FACTOR, 2 * SIZE_FACTOR);
     for ({x, y, radius} of data) {
         ctx.beginPath();
@@ -142,6 +198,22 @@ const drawer = (ctx) => ((event) => {
         ctx.fill();
     }
 
+    if (mode === EGG_MODES.CHILLI) {
+        ctx.fillStyle = '#c45a05';
+        for ({x, y, radius} of data) {
+            ctx.beginPath();
+
+            ctx.arc(
+                x + randInt(-2 * SIZE_FACTOR, 2 * SIZE_FACTOR),
+                y + randInt(-2 * SIZE_FACTOR, 2 * SIZE_FACTOR),
+                radius,
+                0,
+                2 * Math.PI,
+            );
+            ctx.fill();
+        }
+    }
+
     for ({x, y, radius} of data) {
         ctx.fillStyle = Math.random() < 0.85 ? '#ffffef' : "#ffffea";
         ctx.beginPath();
@@ -149,7 +221,7 @@ const drawer = (ctx) => ((event) => {
         ctx.arc(
             x,
             y,
-            radius,
+            mode === EGG_MODES.CHILLI ? radius - 7.5 * SIZE_FACTOR : radius,
             0,
             2 * Math.PI,
         );
@@ -192,15 +264,15 @@ function drawPepper(ctx, x, y, size) {
 
     const mode = getEggMode();
 
-    const numPeppers = randInt(10, 70);
-    const pepperSize = Math.random() * 0.5 + 1.25;
+    const numPeppers = getPepperCount(mode);
+    const pepperSize = getPepperSize(mode);
     const pepperColor = getPepperColor(mode);
     const saltColor = getSaltColor(mode);
 
     for (let i = 0; i < numPeppers; i++) {
         ctx.fillStyle = Math.random() > getPepperSaltVariation(mode) ? pepperColor : saltColor;
 
-        let {x: newX, y: newY} = generateRandomPoint(x, y, 0, size * (0.5 + Math.random()));
+        let {x: newX, y: newY} = getPepperSaltPoint(x, y, size, mode);
 
         ctx.fillRect(
             newX,
