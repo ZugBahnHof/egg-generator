@@ -254,7 +254,7 @@ function generateRandomPoint(x, y, minDistance, maxDistance) {
     const newX = x + distance * Math.cos(angle);
     const newY = y + distance * Math.sin(angle);
 
-    return { x: newX, y: newY };
+    return {x: newX, y: newY};
 }
 
 const pepperDrawer = (context) => (event) => drawPepper(context, event.clientX, event.clientY, 75 * SIZE_FACTOR);
